@@ -1,1 +1,11 @@
 .idea/vcs.xml
+.idea/hydra.xml
+.idea/scala_compiler.xml
+spark-core/sparkwordCount/target/classes/WordCount$$anonfun$1.class
+spark-core/sparkwordCount/target/classes/WordCount$$anonfun$2.class
+spark-core/sparkwordCount/target/classes/WordCount$$anonfun$3.class
+spark-core/sparkwordCount/target/classes/WordCount$.class
+spark-core/sparkwordCount/target/classes/WordCount$delayedInit$body.class
+spark-core/sparkwordCount/target/classes/WordCount.class
+spark-core/sparkwordCount/target/classes/log4j.properties
+.idea/uiDesigner.xml
