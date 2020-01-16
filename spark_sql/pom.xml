@@ -9,12 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spark-sql</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>aa</module>
-        <module>aa</module>
-    </modules>
+    <artifactId>spark_sql</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.11</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+    </dependencies>
 
 </project>
