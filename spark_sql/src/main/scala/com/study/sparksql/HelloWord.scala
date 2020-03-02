@@ -15,10 +15,10 @@ object HelloWord {
   def main(args: Array[String]): Unit = {
     //创建sparkConf()并设置app名称
     val spark = SparkSession
-      .builder()//创建SparkSession
+      .builder() //创建SparkSession
       .appName("sparksql")
       .config("spark.some.config.option", "some-value")
-      .enableHiveSupport()//需要hive支持
+      .enableHiveSupport() //需要hive支持
       .getOrCreate()
 
     //需要导入这个包

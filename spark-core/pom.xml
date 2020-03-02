@@ -13,9 +13,17 @@
     <packaging>pom</packaging>
     <modules>
         <module>sparkwordCount</module>
+        <module>spark-accumulator</module>
+        <module>spark-cdn</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+            <!--<scope>provided</scope>-->
+        </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.11</artifactId>
