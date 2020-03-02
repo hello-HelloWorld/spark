@@ -15,6 +15,7 @@
         <module>sparkwordCount</module>
         <module>spark-accumulator</module>
         <module>spark-cdn</module>
+        <module>spark-partition</module>
     </modules>
 
     <dependencies>

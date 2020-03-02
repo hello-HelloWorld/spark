@@ -1,4 +1,4 @@
-package com.study.sparksql
+package com.study.averageUDAF
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.catalyst.expressions.aggregate.Average
