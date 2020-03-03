@@ -14,6 +14,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
             <!--编译环境能用，运行环境不能用，打包时使用后就不会把依赖打进包中，打包放在集群中运行时，不需要spark和scala的jar包。但是当本地local运行时会报错，应该注释掉。-->
             <!--<scope>provided</scope>-->
         </dependency>
