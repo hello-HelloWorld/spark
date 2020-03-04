@@ -1,67 +1,76 @@
 package com.study.unsafeMyAverage
 
-import org.apache.spark.sql.{Encoder, Encoders, SparkSession}
-import org.apache.spark.sql.expressions.Aggregator
+import org.apache.calcite.avatica.ColumnMetaData
+import org.apache.derby.impl.sql.execute.UserDefinedAggregator
+import org.apache.spark.sql.{Row, SparkSession}
+import org.apache.spark.sql.expressions.{MutableAggregationBuffer, UserDefinedAggregateFunction}
+import org.apache.spark.sql.types._
 
 /*
 * @author: sunxiaoxiong
-* @date  : Created in 2020/3/3 17:01
+* @date  : Created in 2020/3/4 11:03
 */
 
-// 既然是强类型，可能有case类
-case class Employee(name: String, salary: Long)
+object MyAverage extends UserDefinedAggregateFunction {
 
-case class Average(var sum: Long, var count: Long)
+  //聚合函数输入参数的数据类型
+  override def inputSchema: StructType = StructType(StructField("inputColumn", LongType) :: Nil)
 
-class MyAverage extends Aggregator[Employee, Average, Double] {
-
-  //定义一个数据结构，保存工资总数和工资总个数，初始都为0
-  override def zero: Average = Average(0L, 0L)
-
-  //聚合相同executor分片中的结果
-  override def reduce(buffer: Average, employee: Employee): Average = {
-    //工资总数
-    buffer.sum += employee.salary
-    //工资个数
-    buffer.count += 1
-    buffer
+  //聚合缓冲区中的数据类型
+  override def bufferSchema: StructType = {
+    StructType(StructField("sum", LongType) :: StructField("count", LongType) :: Nil)
   }
 
-  //聚合不同execute的结果
-  override def merge(b1: Average, b2: Average): Average = {
-    b1.sum += b2.sum
-    b1.count += b2.count
-    b1
+  //返回值数据类型
+  override def dataType: DataType = DoubleType
+
+  //对于相同的输入是否一直返回相同的输出
+  override def deterministic: Boolean = true
+
+  //初始化
+  override def initialize(buffer: MutableAggregationBuffer): Unit = {
+    //存工资的总额
+    buffer(0) = 0L
+    //存工资的个数
+    buffer(1) = 0L
   }
 
-  //计算输出
-  override def finish(reduction: Average): Double = reduction.sum.toDouble / reduction.count
+  //相同execute间的数据合并
+  override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
+    if (!input.isNullAt(0)) {
+      buffer(0) = buffer.getLong(0) + input.getLong(0)
+      buffer(1) = buffer.getLong(1) + 1
+    }
+  }
 
-  // 设定中间值类型的编码器，要转换成case类
-  // Encoders.product是进行scala元组和case类转换的编码器
-  override def bufferEncoder: Encoder[Average] = Encoders.product
+  //不同execute间的数据合并
+  override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = {
+    buffer1(0) = buffer1.getLong(0) + buffer2.getLong(0)
+    buffer1(1) = buffer1.getLong(1) + buffer2.getLong(1)
+  }
 
-  //设定最终输出值的编码器
-  override def outputEncoder: Encoder[Double] = Encoders.scalaDouble
-}
+  //计算最终结果
+  override def evaluate(buffer: Row): Any = buffer.getLong(0).toDouble / buffer.getLong(1)
 
-object MyAverage {
   def main(args: Array[String]): Unit = {
-    //创建sparkconf并配置
+    //创建sparkConf并配置
     val spark = SparkSession
       .builder()
-      .appName("spark sql basic example")
-      .master("local[4]")
+      .master("local[*]")
+      .appName("spa")
       .getOrCreate()
 
+    // For implicit conversions like converting RDDs to DataFrames
     import spark.implicits._
 
-    val ds = spark.read.json("E:\\workspace\\spark\\spark_sql\\src\\main\\resources\\employees.json").as[Employee]
-    ds.show()
+    //注册udf函数
+    spark.udf.register("myAverage", MyAverage)
 
-    val averageSalary = new MyAverage().toColumn.name("average_salary")
+    val df = spark.read.json("E:\\workspace\\spark\\spark_sql\\src\\main\\resources\\employees.json")
+    df.createOrReplaceTempView("employee")
+    df.show()
 
-    val result = ds.select(averageSalary)
+    val result = spark.sql("select myAverage(salary) as average_salary from employee")
     result.show()
 
     spark.stop()
