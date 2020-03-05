@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainclass>wordcount.WordCount</mainclass>
+                            <mainClass>com.study.wordcount.WordCount</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
