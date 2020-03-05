@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="spark-streaming" />
         <module name="spark_sql" />
         <module name="sparkwordCount" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="aa" target="1.8" />
+      <module name="spark-sql" target="1.8" />
       <module name="sparksql" target="1.8" />
       <module name="sparkwordcount" target="1.8" />
     </bytecodeTargetLevel>

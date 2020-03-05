@@ -10,6 +10,7 @@
     <modules>
         <module>spark-core</module>
         <module>spark_sql</module>
+        <module>spark-streaming</module>
     </modules>
     <!--表名当前项目是一个父项目，没有具体代码，只有声明的公有信息-->
     <packaging>pom</packaging>
