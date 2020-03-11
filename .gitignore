@@ -67,3 +67,9 @@ spark_sql/target/classes/com/study/sparksql/HelloWord.class
 spark_sql/target/classes/employees.json
 target/spark.log
 spark-core/spark-accumulator/target/classes.-710574683.timestamp
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver$$anon$1.class
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver$$anonfun$1.class
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver$$anonfun$2.class
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver$$anonfun$3.class
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver$.class
+spark-streaming/target/classes/com/study/customRecever/CustomReceiver.class

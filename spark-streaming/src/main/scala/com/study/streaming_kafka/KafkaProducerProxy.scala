@@ -7,7 +7,7 @@ import org.apache.commons.pool2.{BasePooledObjectFactory, PooledObject}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 
 //kafka Connection Pool程序：
-case class KafkaProducerProxy(brokerList: String,
+case class  KafkaProducerProxy(brokerList: String,
                               producerConfig: Properties = new Properties(),
                               defaultTopic: Option[String] = None,
                               producer: Option[KafkaProducer[String, String]] = None) {
