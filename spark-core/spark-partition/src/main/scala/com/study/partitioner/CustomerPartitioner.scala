@@ -1,5 +1,6 @@
 package com.study.partitioner
 
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{Partitioner, SparkConf, SparkContext}
 
 /*
@@ -26,13 +27,13 @@ object CustomerPartitioner1 extends App {
   val sc = new SparkContext(conf)
 
   //将一个集合生成rdd
-  val data = sc.parallelize(List("aa.2", "bb.3", "cc.3", "dd.4", "ee.5"))
+  val data: RDD[String] = sc.parallelize(List("aa.2", "bb.3", "cc.3", "dd.4", "ee.5"))
+  data.
   data.collect().foreach(println)
 
   val result = data.map((_, 1)).partitionBy(new CustomerPartitioner(5))
   result.mapPartitionsWithIndex((index, items) => Iterator(index + ":" + items.mkString("|"))).collect().foreach(println)
   data.mapPartitionsWithIndex((index, items) => Iterator(index + ":" + items.mkString("|"))).collect().foreach(println)
-
 
   sc.stop()
 }

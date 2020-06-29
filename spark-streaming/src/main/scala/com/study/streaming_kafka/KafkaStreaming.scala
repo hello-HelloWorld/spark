@@ -3,7 +3,9 @@ package com.study.streaming_kafka
 import java.security.cert.PKIXRevocationChecker
 
 import org.apache.commons.pool2.impl.{GenericObjectPool, GenericObjectPoolConfig}
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.SparkConf
+import org.apache.spark.streaming.dstream.InputDStream
 import org.apache.spark.streaming.kafka010.{ConsumerStrategies, HasOffsetRanges, KafkaUtils, LocationStrategies}
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.codehaus.jackson.map.deser.std.StringDeserializer
@@ -62,7 +64,7 @@ object KafkaStreaming {
     );
 
     //创建DStream,返回接收到的输入数据
-    val stream = KafkaUtils.createDirectStream[String, String](ssc, LocationStrategies.PreferConsistent, ConsumerStrategies.Subscribe[String, String](Array(sourcetopic), kafkaParam))
+    val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](ssc, LocationStrategies.PreferConsistent, ConsumerStrategies.Subscribe[String, String](Array(sourcetopic), kafkaParam))
 
     //每一个stream都是一个ConsumerRecord
     stream.map(s => ("id:" + s.key(), ">>>>:" + s.value())).foreachRDD(rdd => {

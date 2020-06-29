@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spark-partition" />
+        <module name="spark-streaming" />
         <module name="spark_sql" />
         <module name="sparkaccumulator" />
         <module name="sparkcdn" />
+        <module name="sparksuanZi" />
         <module name="sparkwordCount" />
       </profile>
     </annotationProcessing>

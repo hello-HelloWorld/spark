@@ -17,6 +17,7 @@ object WordCount {
     //设置一个checkPoint目录
     ssc.checkpoint(".")
 
+
     // 通过StreamingContext来获取master01机器上9999端口传过来的语句
     val lines = ssc.socketTextStream("master01", 9999)
 

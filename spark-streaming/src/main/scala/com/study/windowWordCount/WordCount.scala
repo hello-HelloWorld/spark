@@ -13,10 +13,12 @@ object WordCount {
     val conf = new SparkConf().setMaster("local[2]").setAppName("wordCount")
     val ssc = new StreamingContext(conf, Seconds(1))
     ssc.checkpoint("./checkPoint")
-ssc.
+
     val lines = ssc.socketTextStream("master01", 9999)
     val words = lines.flatMap(_.split(" "))
     val pairs = words.map(word => (word, 1))
+
+
 
     //    val wordCount=pairs.reduceByKey(_+_)
 

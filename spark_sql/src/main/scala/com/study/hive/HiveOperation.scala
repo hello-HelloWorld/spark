@@ -2,6 +2,7 @@ package com.study.hive
 
 import java.io.File
 
+import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
 
 

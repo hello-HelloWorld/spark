@@ -16,6 +16,7 @@
         <module>spark-accumulator</module>
         <module>spark-cdn</module>
         <module>spark-partition</module>
+        <module>spark-suanZi</module>
     </modules>
 
     <dependencies>

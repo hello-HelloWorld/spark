@@ -1,6 +1,6 @@
 package com.study.sparksql
 
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{RuntimeConfig, SparkSession}
 import org.slf4j.{Logger, LoggerFactory}
 
 /*

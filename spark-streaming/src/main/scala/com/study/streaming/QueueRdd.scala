@@ -14,7 +14,7 @@ object QueueRdd {
     val ssc = new StreamingContext(conf, Seconds(1))
 
     //创建Rdd队列
-    val rddQueue = new mutable.SynchronizedQueue[RDD[Int]]()
+    val rddQueue: mutable.SynchronizedQueue[RDD[Int]] = new mutable.SynchronizedQueue[RDD[Int]]()
 
     //创建QueueInputDstream
     val inputStream = ssc.queueStream(rddQueue)

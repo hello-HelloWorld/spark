@@ -1,5 +1,6 @@
 package com.study.wordcount
 
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.slf4j.LoggerFactory
 
@@ -19,11 +20,11 @@ object WordCount extends App {
   val sc = new SparkContext(sparkConf)
 
   //业务逻辑
-  val file = sc.textFile("hdfs://master1:9000//xiong_test2/student/student.txt")
+  val file: RDD[String] = sc.textFile("hdfs://master2:9000//xiong_test2/student/student.txt")
   val words = file.flatMap(_.split(" "))
   val wordCount = words.map((_, 1))
   val result = wordCount.reduceByKey(_ + _)
-  result.saveAsTextFile("hdfs://master1:9000/xiong_test2/student/abc")
+  result.saveAsTextFile("hdfs://master2:9000/xiong_test2/student/abc2")
 
   //关闭spark连接
   sc.stop()
