@@ -60,12 +60,11 @@ object KafkaStreaming {
       "auto.offest.reset" -> "latest",
       //如果是true,则这个消费者的偏移量会在后台自动提交
       "enable.auto.commit" -> (false: java.lang.Boolean)
-      //ConsumerConfig.GROUP_ID_CONFIG
+//      ConsumerConfig.GROUP_ID_CONFIG
     );
 
     //创建DStream,返回接收到的输入数据
     val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](ssc, LocationStrategies.PreferConsistent, ConsumerStrategies.Subscribe[String, String](Array(sourcetopic), kafkaParam))
-
     //每一个stream都是一个ConsumerRecord
     stream.map(s => ("id:" + s.key(), ">>>>:" + s.value())).foreachRDD(rdd => {
       //对于rdd的每一个分区执行一个操作

@@ -100,7 +100,7 @@ object ActionSuanZi {
     println(result6.mkString(","))
 
     /*
-    * 
+    *
     * */
   }
 }

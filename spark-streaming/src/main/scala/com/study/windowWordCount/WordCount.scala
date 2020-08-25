@@ -1,6 +1,7 @@
 package com.study.windowWordCount
 
 import org.apache.spark.SparkConf
+import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /*
@@ -25,7 +26,7 @@ object WordCount {
     // 窗口大小 为12s， 12/3 = 4  滑动步长 6S，   6/3 =2
     //    val wordCount = pairs.reduceByKeyAndWindow((a: Int, b: Int) => (a + b), Seconds(12), Seconds(6))
 
-    val wordCount = pairs.reduceByKeyAndWindow(_ + _, _ - _, Seconds(12), Seconds(6))
+    val wordCount: DStream[(String, Int)] = pairs.reduceByKeyAndWindow(_ + _, _ - _, Seconds(12), Seconds(6))
 
     wordCount.print()
 

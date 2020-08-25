@@ -1,6 +1,7 @@
 package com.study.statefulWordCount
 
 import org.apache.spark.SparkConf
+import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /*
@@ -39,7 +40,7 @@ object WordCount {
     }
 
     //使用updateStateByKey方法,类型参数为状态的类型，后面传入一个更新方法
-    val stateDstream = words.updateStateByKey[Int](updateFunc)
+    val stateDstream: DStream[(String, Int)] = words.updateStateByKey[Int](updateFunc)
     ///输出
     stateDstream.print()
     stateDstream.saveAsTextFiles("hdfs://master01:9000/stateful/", "abc")
