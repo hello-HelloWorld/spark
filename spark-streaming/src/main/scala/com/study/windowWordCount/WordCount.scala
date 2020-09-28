@@ -25,7 +25,7 @@ object WordCount {
 
     // 窗口大小 为12s， 12/3 = 4  滑动步长 6S，   6/3 =2
     //    val wordCount = pairs.reduceByKeyAndWindow((a: Int, b: Int) => (a + b), Seconds(12), Seconds(6))
-
+    // 加上新进入窗口的批次中的元素 // 移除离开窗口的老批次中的元素 // 窗口时长 // 滑动步长
     val wordCount: DStream[(String, Int)] = pairs.reduceByKeyAndWindow(_ + _, _ - _, Seconds(12), Seconds(6))
 
     wordCount.print()
